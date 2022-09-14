@@ -8,6 +8,13 @@ import './app.css';
 import '../search-panel/search-panel.css';
 
 function App() {
+  const data = [
+    { name: 'Вася Пупкин', salary: 500 },
+    { name: 'Семен Семеныч', salary: 400 },
+    { name: 'Игорь Валькович', salary: 1100 },
+    { name: 'Игорь Петрович', salary: 800 },
+  ];
+
   return (
     <div className="app">
       <AppInfo />
@@ -15,7 +22,7 @@ function App() {
         <SearchPanel />
         <AppFilter />
       </div>
-      <EmployeesList />
+      <EmployeesList data={data} />
       <EmployeesAddForm />
     </div>
   );
