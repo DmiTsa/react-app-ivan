@@ -1,9 +1,13 @@
 import './employees-list-item.css';
 
 function EmployeesListItem(props) {
-  const { name, salary } = props;
+  const { name, salary, increase } = props;
+  let classesIsIncrease = increase
+    ? 'list-group-item d-flex justify-content-between increase'
+    : 'list-group-item d-flex justify-content-between';
+
   return (
-    <li className="list-group-item d-flex justify-content-between">
+    <li className={classesIsIncrease}>
       <span className="list-group-item-label">{name}</span>
       <input
         type="text"

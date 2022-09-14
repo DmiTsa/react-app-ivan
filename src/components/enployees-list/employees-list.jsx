@@ -1,13 +1,11 @@
 import EmployeesListItem from '../employees-list-item/employees-list-item';
 
 function EmployeesList({ data }) {
-  return (
-    <ul className="app-list list-group">
-      {data.map((empl) => (
-        <EmployeesListItem name={empl.name} salary={empl.salary} />
-      ))}
-    </ul>
-  );
+  const cont = data.map((empl) => {
+    const { id, ...emplMod } = empl;
+    return <EmployeesListItem key={id} {...emplMod} />;
+  });
+  return <ul className="app-list list-group">{cont}</ul>;
 }
 
 export default EmployeesList;

@@ -9,10 +9,10 @@ import '../search-panel/search-panel.css';
 
 function App() {
   const data = [
-    { name: 'Вася Пупкин', salary: 500 },
-    { name: 'Семен Семеныч', salary: 400 },
-    { name: 'Игорь Валькович', salary: 1100 },
-    { name: 'Игорь Петрович', salary: 800 },
+    { name: 'Вася Пупкин', salary: 500, increase: true, id: 1 },
+    { name: 'Семен Семеныч', salary: 400, increase: false, id: 2 },
+    { name: 'Игорь Валькович', salary: 1100, increase: false, id: 3 },
+    { name: 'Игорь Петрович', salary: 800, increase: true, id: 4 },
   ];
 
   return (
