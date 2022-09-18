@@ -21,15 +21,17 @@ class App extends Component {
       ],
     };
   }
-  // getId() {
-  //   return nextId();
-  // }
-  setDataIds() {
+  addNewEmployee = (name, salary) => {
+    const newEmpl = {
+      name,
+      salary,
+      insrease: false,
+      id: nextId(),
+    };
     this.setState(({ data }) => {
-      const newData = data.map((pers) => (pers.id = nextId()));
-      return { data: newData };
+      return { data: [...data, newEmpl] };
     });
-  }
+  };
 
   deleteItem = (id) => {
     this.setState(({ data }) => {
@@ -49,7 +51,7 @@ class App extends Component {
           <AppFilter />
         </div>
         <EmployeesList data={this.state.data} onDelete={this.deleteItem} />
-        <EmployeesAddForm />
+        <EmployeesAddForm addEmployee={this.addNewEmployee} />
       </div>
     );
   }

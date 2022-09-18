@@ -12,9 +12,11 @@ class EmployeesAddForm extends Component {
       [e.target.name]: e.target.value,
     });
   };
-  addEmployee() {
-    return; //
-  }
+  addEmpl = (e) => {
+    e.preventDefault();
+    this.props.addEmployee(this.state.name, this.state.salary);
+    this.setState({ name: '', salary: 0 });
+  };
 
   render() {
     const { name, salary } = this.state;
@@ -22,7 +24,7 @@ class EmployeesAddForm extends Component {
     return (
       <div className="app-add-form">
         <h3>Добавьте нового сотрудника</h3>
-        <form className="add-form d-flex">
+        <form className="add-form d-flex" onSubmit={this.addEmpl}>
           <input
             type="text"
             className="form-control new-post-label"
@@ -37,13 +39,9 @@ class EmployeesAddForm extends Component {
             placeholder="ЗП в $"
             name="salary"
             value={salary}
-            onChange={this.onValueChange}
+            onChange={(e) => this.onValueChange}
           />
-          <button
-            type="submit"
-            className="btn btn-outline-light"
-            onSubmit={this.addEmployee}
-          >
+          <button type="submit" className="btn btn-outline-light">
             Добавить
           </button>
         </form>
