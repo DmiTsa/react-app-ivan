@@ -1,48 +1,38 @@
-import { Component } from 'react';
 import './app-filter.css';
 
-class AppFilter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { currentFilter: '' };
-  }
+const AppFilter = (props) => {
+  const { filterType, onSetFilter } = props;
+  const buttonsData = [
+    {
+      name: 'all',
+      caption: 'Все сотрудники',
+    },
+    {
+      name: 'rise',
+      caption: 'На повышение',
+    },
+    {
+      name: 'over',
+      caption: 'ЗП больше 1000$',
+    },
+  ];
 
-  setFilter = (e) => {
-    const filterType = e.currentTarget.getAttribute('data-typefilter');
-    this.setState({ currentFilter: filterType });
-    this.props.EmplFilter(filterType);
-  };
-
-  render() {
+  const buttons = buttonsData.map(({ name, caption }) => {
+    const active = filterType === name;
+    const clazz = active ? 'btn-light' : 'btn-outline-light';
     return (
-      <div className="btn-group">
-        <button
-          className="btn btn-light"
-          type="button"
-          data-typefilter="all"
-          onClick={this.setFilter}
-        >
-          Все сотрудники
-        </button>
-        <button
-          className="btn btn-outline-light"
-          type="button"
-          data-typefilter="rise"
-          onClick={this.setFilter}
-        >
-          На повышение
-        </button>
-        <button
-          className="btn btn-outline-light"
-          type="button"
-          data-typefilter="over"
-          onClick={this.setFilter}
-        >
-          ЗП больше 1000$
-        </button>
-      </div>
+      <button
+        className={`btn ${clazz}`}
+        type="button"
+        filterKey={name}
+        onClick={() => onSetFilter(name)}
+      >
+        {caption}
+      </button>
     );
-  }
-}
+  });
+
+  return <div className="btn-group">{buttons}</div>;
+};
 
 export default AppFilter;

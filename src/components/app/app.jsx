@@ -76,20 +76,18 @@ class App extends Component {
     if (term.length === 0) {
       return empls;
     }
-    return empls.filter(
-      (empl) => empl.name.includes(term) //.indexOf(term) > -1
-    );
+    return empls.filter((empl) => empl.name.includes(term));
   };
 
-  filterEmpl = (searchedData, filterType) => {
-    if (filterType === 'all') {
-      return searchedData;
-    }
-    if (filterType === 'rise') {
-      return searchedData.like.filter((el) => el);
-    }
-    if (filterType === 'over') {
-      return searchedData.salary((el) => el > 1000);
+  filterEmpl = (data, filterType) => {
+    const SALARY_LIMIT = 1000;
+    switch (filterType) {
+      case 'rise':
+        return data.filter((el) => el.like);
+      case 'over':
+        return data.filter((el) => el.salary > SALARY_LIMIT);
+      default:
+        return data;
     }
   };
 
@@ -97,8 +95,8 @@ class App extends Component {
     this.setState({ term });
   };
 
-  onUpdateFilter = (filter) => {
-    this.setState({ filter });
+  onSetFilter = (filterType) => {
+    this.setState({ filterType });
   };
 
   render() {
@@ -107,8 +105,10 @@ class App extends Component {
     const employeeBonusCount = data.filter(
       (empl) => empl.increase === true
     ).length;
-    const searchedData = this.searchEmpl(data, term);
-    const searchedFiltredData = this.filterEmpl(searchedData, filterType);
+    const visibleData = this.filterEmpl(
+      this.searchEmpl(data, term),
+      filterType
+    );
 
     return (
       <div className="app">
@@ -118,10 +118,10 @@ class App extends Component {
         />
         <div className="search-panel">
           <SearchPanel onUpdateSearch={this.onUpdateSearch} />
-          <AppFilter EmplFilter={this.onUpdateFilter} />
+          <AppFilter filterType={filterType} onSetFilter={this.onSetFilter} />
         </div>
         <EmployeesList
-          data={searchedFiltredData}
+          data={visibleData}
           onDelete={this.deleteItem}
           onToggleProp={this.onToggleProp}
         />
