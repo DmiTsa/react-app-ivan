@@ -4,7 +4,7 @@ import './employees-add-form.css';
 class EmployeesAddForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', salary: 0 };
+    this.state = { name: '', salary: '' };
   }
 
   onValueChange = (e) => {
@@ -13,7 +13,9 @@ class EmployeesAddForm extends Component {
     });
   };
   addEmpl = (e) => {
+    const { name, salary } = this.state;
     e.preventDefault();
+    if (name.length < 3 || !Number.isInteger(+salary) || +salary === 0) return;
     this.props.addEmployee(this.state.name, this.state.salary);
     this.setState({ name: '', salary: 0 });
   };

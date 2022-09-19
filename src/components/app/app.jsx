@@ -36,6 +36,7 @@ class App extends Component {
           id: 1003,
         },
       ],
+      term: '',
     };
   }
   addNewEmployee = (name, salary) => {
@@ -70,23 +71,27 @@ class App extends Component {
     });
   };
 
-  // onToggleLike = (id) => {
-  //   this.setState(({ data }) => {
-  //     return {
-  //       data: data.map((item) => {
-  //         if (item.id === id) {
-  //           return { ...item, like: !item.like };
-  //         } else return item;
-  //       }),
-  //     };
-  //   });
-  // };
+  searchEmpl = (empls, term) => {
+    if (term.length === 0) {
+      return empls;
+    }
+    return empls.filter(
+      (empl) => empl.name.includes(term) //.indexOf(term) > -1
+    );
+  };
+
+  onUpdateSearch = (term) => {
+    this.setState({ term });
+  };
 
   render() {
-    const employeeCount = this.state.data.length;
-    const employeeBonusCount = this.state.data.filter(
+    const { data, term } = this.state;
+    const employeeCount = data.length;
+    const employeeBonusCount = data.filter(
       (empl) => empl.increase === true
     ).length;
+    const searchedData = this.searchEmpl(data, term);
+
     return (
       <div className="app">
         <AppInfo
@@ -94,11 +99,11 @@ class App extends Component {
           employeeBonusCount={employeeBonusCount}
         />
         <div className="search-panel">
-          <SearchPanel />
+          <SearchPanel onUpdateSearch={this.onUpdateSearch} />
           <AppFilter />
         </div>
         <EmployeesList
-          data={this.state.data}
+          data={searchedData}
           onDelete={this.deleteItem}
           onToggleProp={this.onToggleProp}
         />
