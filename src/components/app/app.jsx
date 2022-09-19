@@ -37,6 +37,7 @@ class App extends Component {
         },
       ],
       term: '',
+      filter: 'all',
     };
   }
   addNewEmployee = (name, salary) => {
@@ -71,7 +72,7 @@ class App extends Component {
     });
   };
 
-  searchEmpl = (empls, term) => {
+  searchEmpl = (empls, term, filter) => {
     if (term.length === 0) {
       return empls;
     }
@@ -84,13 +85,17 @@ class App extends Component {
     this.setState({ term });
   };
 
+  onUpdateFilter = (filter) => {
+    this.setState({ filter });
+  };
+
   render() {
-    const { data, term } = this.state;
+    const { data, term, filter } = this.state;
     const employeeCount = data.length;
     const employeeBonusCount = data.filter(
       (empl) => empl.increase === true
     ).length;
-    const searchedData = this.searchEmpl(data, term);
+    const searchedData = this.searchEmpl(data, term, filter);
 
     return (
       <div className="app">
@@ -100,7 +105,7 @@ class App extends Component {
         />
         <div className="search-panel">
           <SearchPanel onUpdateSearch={this.onUpdateSearch} />
-          <AppFilter />
+          <AppFilter EmplFilter={this.onUpdateFilter} />
         </div>
         <EmployeesList
           data={searchedData}
