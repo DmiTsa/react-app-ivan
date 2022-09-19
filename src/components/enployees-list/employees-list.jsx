@@ -1,7 +1,7 @@
 import EmployeesListItem from '../employees-list-item/employees-list-item';
 
 function EmployeesList(props) {
-  const { data, onDelete, onToggleIncrease, onToggleLike } = props;
+  const { data, onDelete, onToggleProp } = props;
   const cont = data.map((empl) => {
     const { id, ...emplMod } = empl;
     return (
@@ -9,8 +9,9 @@ function EmployeesList(props) {
         key={id}
         {...emplMod}
         onDelete={() => onDelete(id)}
-        onToggleIncrease={() => onToggleIncrease(id)}
-        onToggleLike={() => onToggleLike(id)}
+        onToggleProp={(e) =>
+          onToggleProp(id, e.currentTarget.getAttribute('data-toggle'))
+        }
       />
     );
   });

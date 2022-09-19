@@ -58,21 +58,29 @@ class App extends Component {
     });
   };
 
-  onToggleIncrease = (id) => {
+  onToggleProp = (id, prop) => {
     this.setState(({ data }) => {
       return {
         data: data.map((item) => {
           if (item.id === id) {
-            return { ...item, increase: !item.increase };
+            return { ...item, [prop]: !item[prop] };
           } else return item;
         }),
       };
     });
   };
 
-  onToggleLike = (id) => {
-    return console.log(`like ${id}`);
-  };
+  // onToggleLike = (id) => {
+  //   this.setState(({ data }) => {
+  //     return {
+  //       data: data.map((item) => {
+  //         if (item.id === id) {
+  //           return { ...item, like: !item.like };
+  //         } else return item;
+  //       }),
+  //     };
+  //   });
+  // };
 
   render() {
     const employeeCount = this.state.data.length;
@@ -92,8 +100,7 @@ class App extends Component {
         <EmployeesList
           data={this.state.data}
           onDelete={this.deleteItem}
-          onToggleIncrease={this.onToggleIncrease}
-          onToggleLike={this.onToggleLike}
+          onToggleProp={this.onToggleProp}
         />
         <EmployeesAddForm addEmployee={this.addNewEmployee} />
       </div>
