@@ -37,7 +37,7 @@ class App extends Component {
         },
       ],
       term: '',
-      filter: 'all',
+      filterType: 'all',
     };
   }
   addNewEmployee = (name, salary) => {
@@ -72,13 +72,25 @@ class App extends Component {
     });
   };
 
-  searchEmpl = (empls, term, filter) => {
+  searchEmpl = (empls, term) => {
     if (term.length === 0) {
       return empls;
     }
     return empls.filter(
       (empl) => empl.name.includes(term) //.indexOf(term) > -1
     );
+  };
+
+  filterEmpl = (searchedData, filterType) => {
+    if (filterType === 'all') {
+      return searchedData;
+    }
+    if (filterType === 'rise') {
+      return searchedData.like.filter((el) => el);
+    }
+    if (filterType === 'over') {
+      return searchedData.salary((el) => el > 1000);
+    }
   };
 
   onUpdateSearch = (term) => {
@@ -90,12 +102,13 @@ class App extends Component {
   };
 
   render() {
-    const { data, term, filter } = this.state;
+    const { data, term, filterType } = this.state;
     const employeeCount = data.length;
     const employeeBonusCount = data.filter(
       (empl) => empl.increase === true
     ).length;
-    const searchedData = this.searchEmpl(data, term, filter);
+    const searchedData = this.searchEmpl(data, term);
+    const searchedFiltredData = this.filterEmpl(searchedData, filterType);
 
     return (
       <div className="app">
@@ -108,7 +121,7 @@ class App extends Component {
           <AppFilter EmplFilter={this.onUpdateFilter} />
         </div>
         <EmployeesList
-          data={searchedData}
+          data={searchedFiltredData}
           onDelete={this.deleteItem}
           onToggleProp={this.onToggleProp}
         />

@@ -8,9 +8,9 @@ class AppFilter extends Component {
   }
 
   setFilter = (e) => {
-    const typeFilter = e.currentTarget.getAttribute('data-typefilter');
-    this.setState({ currentFilter: typeFilter });
-    this.props.EmplFilter(typeFilter);
+    const filterType = e.currentTarget.getAttribute('data-typefilter');
+    this.setState({ currentFilter: filterType });
+    this.props.EmplFilter(filterType);
   };
 
   render() {
